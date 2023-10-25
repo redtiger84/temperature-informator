@@ -1,5 +1,6 @@
 package com.example.largefilereadingchallenge.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,6 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Temperature {
 
-    private String city;
+    private String year;
+
+    @JsonProperty("average_temperature")
     private double averageTemperature;
 }

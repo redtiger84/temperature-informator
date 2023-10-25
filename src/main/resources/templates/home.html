@@ -1,19 +1,52 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <title>Autocomplete</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-    $(function() {
-      $("#autocomplete-input").autocomplete({
-        source: "/temperatures/autocomplete" // Ścieżka do endpointu, który zwraca sugestie
+    <title>Temperature Search</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/styles.css"/>
+    <script>
+      $(function () {
+        $("#autocomplete-input").autocomplete({
+          source: "/temperatures/city",
+          select: function (event, ui) {
+            getTemperature(ui.item.value);
+          }
+        });
+
+        function getTemperature(city) {
+          $.get("/temperatures/" + city, function (data) {
+            displayTemperature(data);
+          });
+        }
+
+        function displayTemperature(data) {
+          let table = '<table>';
+          table += '<tr><th>Year</th><th>Average Temperature</th></tr>';
+
+          for (let i = 0; i < data.length; i++) {
+            table += '<tr>';
+            table += '<td>' + data[i].year + '</td>';
+            table += '<td>' + data[i].average_temperature + '</td>';
+            table += '</tr>';
+          }
+
+          table += '</table>';
+          $("#result").html(table);
+        }
       });
-    });
-  </script>
+    </script>
 </head>
 <body>
-<input type="text" id="autocomplete-input" />
+<img id="weather-image" src="/images/wheatherCity.jpeg" alt="city wheather"/>
+<div id="header">
+    <h1>Check temperature in your city:</h1>
+</div>
+<div id="search-container">
+    <label for="autocomplete-input">Write a city:</label>
+    <input type="text" id="autocomplete-input"/>
+</div>
+<div id="result"></div>
 </body>
 </html>
