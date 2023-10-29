@@ -73,7 +73,7 @@ class CSVFileReaderTest {
     }
 
     private void checkResults(Map<Integer, Double> cityResults, String cityName) throws DataFileException {
-        Map<Integer, Double> result = csvFileReader.readCSVFile(cityName);
+        Map<Integer, Double> result = csvFileReader.calculateAverageTemperatureForCity(cityName);
         Assertions.assertThat(result).isNotEmpty().hasSize(cityResults.size())
             .containsExactlyInAnyOrderEntriesOf(cityResults);
     }
@@ -81,7 +81,7 @@ class CSVFileReaderTest {
     @Test
     void shouldThrowDataFileExceptionForReadCsvFileMethod() {
         CSVFileReader failedCsvFileReader = new CSVFileReader(null);
-        Assertions.assertThatThrownBy(() -> failedCsvFileReader.readCSVFile(null))
+        Assertions.assertThatThrownBy(() -> failedCsvFileReader.calculateAverageTemperatureForCity(null))
             .isInstanceOf(DataFileException.class)
             .hasMessageContaining("invalid_input_data");
     }
@@ -89,7 +89,7 @@ class CSVFileReaderTest {
     @Test
     void shouldReturnEmptyListForNonExistingCity() {
         Assertions.assertThatCode(() -> {
-            Map<Integer, Double> result = csvFileReader.readCSVFile(null);
+            Map<Integer, Double> result = csvFileReader.calculateAverageTemperatureForCity(null);
             Assertions.assertThat(result).isEmpty();
         }).doesNotThrowAnyException();
 

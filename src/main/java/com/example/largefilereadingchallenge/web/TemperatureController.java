@@ -38,6 +38,6 @@ public class TemperatureController {
 
     @GetMapping("/{city}")
     public Map<Integer, Double> getTemperature(@PathVariable String city) throws DataFileException {
-        return temperatureService.readCSVFile(city);
+        return temperatureService.calculateAverageTemperatureForCity(city);
     }
 }

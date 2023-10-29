@@ -27,8 +27,8 @@ public class TemperatureService {
     }
 
 
-    public Map<Integer, Double> readCSVFile(String city) throws DataFileException {
-        return temperatureReader.readCSVFile(city);
+    public Map<Integer, Double> calculateAverageTemperatureForCity(String city) throws DataFileException {
+        return temperatureReader.calculateAverageTemperatureForCity(city);
     }
 }
 

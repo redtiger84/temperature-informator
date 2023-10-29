@@ -8,5 +8,5 @@ public interface TemperatureReader {
 
     Set<String> extractCities() throws DataFileException;
 
-    Map<Integer, Double> readCSVFile(String city) throws DataFileException;
+    Map<Integer, Double> calculateAverageTemperatureForCity(String city) throws DataFileException;
 }

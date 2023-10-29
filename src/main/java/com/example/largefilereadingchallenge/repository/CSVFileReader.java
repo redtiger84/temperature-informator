@@ -44,7 +44,7 @@ public class CSVFileReader implements TemperatureReader {
     }
 
     @Override
-    public Map<Integer, Double> readCSVFile(String city) throws DataFileException {
+    public Map<Integer, Double> calculateAverageTemperatureForCity(String city) throws DataFileException {
         if (pathToInputFile == null) {
             throw new DataFileException();
         }

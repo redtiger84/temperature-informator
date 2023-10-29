@@ -3,38 +3,30 @@
 ## Description
 
 This solution provides an endpoint `/temperatures` with two REST methods:
+- The first method retrieves all cities from a file. 
+  - It is possible to filter and limit the number of cities using the following command
+`
+    curl --location 'http://localhost:8080/temperatures/city?term=w&limit=2'
 
-- GET http://localhost:8080/temperatures/{city}
-    - Returns temperature information for the selected city.
-- GET http://localhost:8080/temperatures/city
-    - Returns a list of all available cities.
+- The second method retrieves the years and average temperatures for a specified city
+  - The average temperature is rounded to 2 decimal places using the following command:
+`
+    curl --location 'http://localhost:8080/temperatures/Warszawa' 
+`
+## Webpage
 
-## Interface
+- The homepage allows you to enter a city name and retrieve the average temperature
+  - Access it at: http://localhost:8080/
 
-- Homepage (Authentication required by login and password).
-- API endpoint (API key required).
+## Assumptions
 
-## Technologies Used
+- Caching is enabled for the method that retrieves all cities from a file
+  - Time-to-Live (TTL) is set to 5 minutes
 
-- Security (To-Do)
-- Cache (To-Do)
-- Swagger (To-Do)
+## Logger
 
-## Security
+- Memory usage is logged when data is read from the CSV file. The log level is set to debug.
 
-This is an example of security, where login, password, and API key are static.
+## Errors
 
-- Login
-- Password
-- API key
-
-### Assumptions
-
-- Cache
-- Time-to-Live (TTL): 5 minutes
-
-### Logger
-
-- logging of used memory and numbers of read data
-
-### Errors
+- A 500 error is thrown when there is a problem with the CSV file.
