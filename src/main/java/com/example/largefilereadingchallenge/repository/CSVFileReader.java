@@ -35,7 +35,6 @@ public class CSVFileReader implements TemperatureReader {
         try (Stream<String> lines = java.nio.file.Files.lines(pathToInputFile)) {
             return lines
                 .filter(Objects::nonNull)
-                .skip(1)
                 .map(line -> line.split(DATA_SEPARATOR)[0])
                 .filter(city -> !city.isEmpty())
                 .collect(Collectors.toSet());
@@ -46,11 +45,15 @@ public class CSVFileReader implements TemperatureReader {
 
     @Override
     public Map<Integer, Double> readCSVFile(String city) throws DataFileException {
+        if (pathToInputFile == null) {
+            throw new DataFileException();
+        }
+
         Map<Integer, List<Double>> temperatureMap = new HashMap<>();
 
         try (Stream<String> lines = java.nio.file.Files.lines(pathToInputFile)) {
             lines
-                .skip(1) // Skip the header line
+                .filter(Objects::nonNull)
                 .filter(line -> line.startsWith(city + DATA_SEPARATOR))
                 .forEach(line -> {
                     String[] parts = line.split(DATA_SEPARATOR);
@@ -67,7 +70,9 @@ public class CSVFileReader implements TemperatureReader {
         return temperatureMap.entrySet().stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey,
-                entry -> entry.getValue().stream().mapToDouble(Double::doubleValue).average().orElse(0.0)
+                entry ->
+                    Math.round(entry.getValue().stream().mapToDouble(Double::doubleValue).average().orElse(0.0) * 100.0)
+                        / 100.0
             ));
     }
 }
