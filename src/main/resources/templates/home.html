@@ -17,20 +17,20 @@
 
         function getTemperature(city) {
           $.get("/temperatures/" + city, function (data) {
-            displayTemperature(data);
+            displayTemperature(data, city);
           });
         }
 
-        function displayTemperature(data) {
+        function displayTemperature(data, city) {
           let table = '<table>';
-          table += '<tr><th>Year</th><th>Average Temperature</th></tr>';
+          table += '<tr><th>Year</th><th>Average Temperature (' + city + ')</th></tr>';
 
-          for (let i = 0; i < data.length; i++) {
+          Object.entries(data).forEach(([year, average_temperature]) => {
             table += '<tr>';
-            table += '<td>' + data[i].year + '</td>';
-            table += '<td>' + data[i].average_temperature + '</td>';
+            table += '<td>' + year + '</td>';
+            table += '<td>' + average_temperature + '</td>';
             table += '</tr>';
-          }
+          });
 
           table += '</table>';
           $("#result").html(table);
