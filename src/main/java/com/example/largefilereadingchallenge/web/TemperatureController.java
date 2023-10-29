@@ -37,10 +37,10 @@ public class TemperatureController {
     public List<Temperature> getTemperature(@PathVariable String city) {
         Map<String, List<Temperature>> result = new HashMap<>();
         result.put("Berlin",
-            List.of(new Temperature("2021", 12.1), new Temperature("2022", 13.1), new Temperature("2023", 13.1)));
-        result.put("Ateny", List.of(new Temperature("2022", 11.1)));
-        result.put("Rzym", List.of(new Temperature("2023", 14.1)));
-        result.put("Włochy", List.of(new Temperature("2024", 15.0)));
+            List.of(new Temperature(2021, 12.1), new Temperature(2022, 13.1), new Temperature(2023, 13.1)));
+        result.put("Ateny", List.of(new Temperature(2022, 11.1)));
+        result.put("Rzym", List.of(new Temperature(2023, 14.1)));
+        result.put("Włochy", List.of(new Temperature(2024, 15.0)));
 
         return result.get(city);
     }
